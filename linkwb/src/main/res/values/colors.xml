@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--theme-->
+    <color name="theme_default_color">#249ef6</color>
+    <color name="theme_text_color">#FF000000</color>
+
+    <!--common-->
+    <color name="wb_common_title">#0090FF</color><!--TITLE-->
+    <color name="wb_common_title_text">#FFFFFF</color><!--TITLE-->
+    <color name="wb_headline_text" >#1E88D4</color>           <!--HT-->
+    <color name="wb_headline_pressed_text" >#4C1E88D4</color> <!--HT(alpha:30%)-->
+    <color name="wb_primary_text" >#000000</color>            <!--NT-->
+    <color name="wb_primary_disable_text" >#4C000000</color>  <!--NT(alpha:30%)-->
+    <color name="wb_secondary_text" >#888888</color>          <!--ST-->
+    <color name="wb_tab" >#FFFFFF</color>                     <!--TAB-->
+    <color name="wb_line" >#24000000</color>                  <!--LINE-->
+    <color name="wb_bold_line" >#0F333333</color>             <!--BOLD_LINE-->
+
+    <color name="wb_white">@android:color/white</color>
+
+    <!--skin-->
+    <color name="theme_skin_color_1">#249ef6</color>
+    <color name="theme_skin_color_2">#FA8072</color>
+    <color name="theme_skin_color_3">#66CDAA</color>
+    <color name="theme_skin_color_4">#6959CD</color>
+    <color name="theme_skin_color_5">#00EE00</color>
+    <color name="theme_skin_color_6">#CD3700</color>
+    <color name="theme_skin_color_7">#EEEE00</color>
+
+</resources>
