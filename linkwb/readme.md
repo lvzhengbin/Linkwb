@@ -29,8 +29,13 @@ http://www.jianshu.com/p/76e30f87a4ed
 ##### 框架
 MVP | MVVM
 
+##### 服务：
+http://apistore.baidu.com/
 
 ##### 项目参考：https://github.com/lvzhengbin/AisenWeiBo
+https://github.com/wuchangfeng/ZhuanLan
+https://github.com/gaolonglong/GankGirl
+https://marktony.github.io/2016/05/14/%E7%9F%A5%E4%B9%8E%E4%B8%93%E6%A0%8FAPI%E5%88%86%E6%9E%90/
 
 
 
