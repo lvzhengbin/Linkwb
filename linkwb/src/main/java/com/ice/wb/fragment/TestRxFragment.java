@@ -2,9 +2,8 @@ package com.ice.wb.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,11 +14,12 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.ice.wb.R;
 import com.ice.wb.adapter.DividerItemDecoration;
-import com.ice.wb.adapter.TestLocalAppsAdapter;
+import com.ice.wb.adapter.TestLocalAppsQuickAdapter;
 import com.ice.wb.model.AppInfo;
 
 import java.util.ArrayList;
@@ -49,7 +49,8 @@ public class TestRxFragment extends AbsSkinFragment implements SwipeRefreshLayou
     @Bind(R.id.app_list_recyclerView)
     RecyclerView mRecyclerView;
 
-    private TestLocalAppsAdapter adapter;
+    //private TestLocalAppsAdapter adapter;
+    private TestLocalAppsQuickAdapter adapter;
 
     private Subscription mSubscription;
 
@@ -88,31 +89,30 @@ public class TestRxFragment extends AbsSkinFragment implements SwipeRefreshLayou
         refreshTheList();
     }
 
-    private Observable<AppInfo> getApps(){
-        return Observable.create(new Observable.OnSubscribe<AppInfo>() {
+    private Observable<List<AppInfo>> getApps(){
+        return Observable.create(new Observable.OnSubscribe<List<AppInfo>>() {
             @Override
-            public void call(Subscriber<? super AppInfo> subscriber) {
+            public void call(Subscriber<? super List<AppInfo>> subscriber) {
                 Log.d(TAG, "getApps() Observable create");
                 List<AppInfo> apps = new ArrayList<AppInfo>();
                 final Intent mainIntent = new Intent(Intent.ACTION_MAIN,null);
                 mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
                 PackageManager packageManager = getActivity().getPackageManager();
-                List<ResolveInfo> infos = packageManager.queryIntentActivities(mainIntent, 0);
-                for(ResolveInfo info : infos){
+                List<PackageInfo> installedPackages = packageManager.getInstalledPackages(0);
+                for (PackageInfo info : installedPackages){
                     AppInfo appInfo = new AppInfo();
-                    String appName = info.loadLabel(packageManager).toString();
-                    Drawable iconDrawable = info.loadIcon(packageManager);
-                    appInfo.setIcon(iconDrawable);
-                    appInfo.setName(appName);
+                    appInfo.setIcon(info.applicationInfo.loadIcon(packageManager));
+                    appInfo.setName(info.applicationInfo.loadLabel(packageManager).toString());
+
                     apps.add(appInfo);
 
                     if (subscriber.isUnsubscribed()){//是否已取消订阅关系
                         return;
                     }
-                    subscriber.onNext(appInfo);
-                    subscriber.onCompleted();
                 }
+                subscriber.onNext(apps);
+                subscriber.onCompleted();
             }
         });
     }
@@ -120,7 +120,7 @@ public class TestRxFragment extends AbsSkinFragment implements SwipeRefreshLayou
     private void refreshTheList(){
         mSwipeRefreshLayout.setRefreshing(true);
         mSubscription = getApps()
-                .toSortedList()//toSortedList()方法将发射的数据转换成为一个List<appinfo>
+                //.toSortedList()//toSortedList()方法将发射的数据转换成为一个List<appinfo>
                 .subscribeOn(Schedulers.newThread())// 指定 subscribe() 发生在 IO 线程
                 .observeOn(AndroidSchedulers.mainThread())//指定 Subscriber 的回调发生在主线程
                 .subscribe(new Observer<List<AppInfo>>() {
@@ -142,12 +142,31 @@ public class TestRxFragment extends AbsSkinFragment implements SwipeRefreshLayou
                     public void onNext(List<AppInfo> appInfos) {
                         Log.d(TAG, "onNext() appInfos is size " + appInfos.size());
                         Toast.makeText(getActivity(), "Here is the onNext(): " + appInfos.size(), Toast.LENGTH_LONG).show();
-                        adapter = new TestLocalAppsAdapter(mContext, appInfos);
+                        adapter = new TestLocalAppsQuickAdapter(appInfos);
+                        initHeadView();
+                        initFooter();
                         mRecyclerView.setAdapter(adapter);
                     }
                 });
     }
 
+
+    private void initHeadView(){
+        View headView = LayoutInflater.from(mContext).inflate(R.layout.test_recycleview_head, null);
+        headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(mContext, 80)));
+        adapter.addHeaderView(headView);
+    }
+
+    private void initFooter(){
+        View footerView = LayoutInflater.from(mContext).inflate(R.layout.test_recycleview_footer, null);
+        footerView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(mContext, 80)));
+        adapter.addFooterView(footerView);
+    }
+
+    public int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
 
     @Override
     public void onDestroyView() {

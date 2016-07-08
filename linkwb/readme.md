@@ -26,8 +26,18 @@ http://www.jianshu.com/p/76e30f87a4ed
 
 * logger
 
+
+FragmentPagerAdapter+ViewPager
+
 ##### 框架
 MVP | MVVM
+
+
+##### 开源控件
+android-Ultra-Pull-To-Refresh:
+https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh
+
+
 
 ##### 服务：
 http://apistore.baidu.com/

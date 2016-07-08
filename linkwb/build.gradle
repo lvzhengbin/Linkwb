@@ -18,10 +18,10 @@ android {
         }
     }
 
-    //noinspection all
+    /*//noinspection all
     task copyNativeLibs(type: Copy) {
         // third party lib so
-        from(new File(projectDir, 'libs')) { include 'armeabi/*.so','armeabi-v7a/*.so' }
+        from(new File(projectDir, 'libs')) { include 'armeabi*//*.so','armeabi-v7a*//*.so' }
         into new File(buildDir, 'native-libs')
     }
     tasks.withType(JavaCompile) {
@@ -35,7 +35,7 @@ android {
         pkgTask ->
             pkgTask.jniFolders = new HashSet()
             pkgTask.jniFolders.add(new File(buildDir, 'native-libs'))
-    }
+    }*/
 
 }
 
