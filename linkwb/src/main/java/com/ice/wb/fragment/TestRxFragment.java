@@ -120,7 +120,6 @@ public class TestRxFragment extends AbsSkinFragment implements SwipeRefreshLayou
     private void refreshTheList(){
         mSwipeRefreshLayout.setRefreshing(true);
         mSubscription = getApps()
-                //.toSortedList()//toSortedList()方法将发射的数据转换成为一个List<appinfo>
                 .subscribeOn(Schedulers.newThread())// 指定 subscribe() 发生在 IO 线程
                 .observeOn(AndroidSchedulers.mainThread())//指定 Subscriber 的回调发生在主线程
                 .subscribe(new Observer<List<AppInfo>>() {
