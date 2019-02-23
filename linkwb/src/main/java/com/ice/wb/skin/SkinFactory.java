@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,22 +32,33 @@ public class SkinFactory implements LayoutInflater.Factory{
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         View view = null;
-        try {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             int i = name.indexOf(".");
-            if (i > 0) {
-                // 自定义控件
-                view = inflater.createView(name, null, attrs);
-            }else{
-                view = inflater.createView(name, "android.widget.", attrs);
+            try {
+                if (i > 0) {
+                    // 自定义控件
+                    view = inflater.createView(name, null, attrs);
+                }else{
+                    //view = inflater.createView(name, "android.widget.", attrs);
+                    if ("View".equals(name)) {
+                        view = inflater.createView(name, "android.view.", attrs);
+                    }
+                    if (view == null) {
+                        view = inflater.createView(name, "android.widget.", attrs);
+                    }
+                    if (view == null) {
+                        view = inflater.createView(name, "android.webkit.", attrs);
+                    }
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InflateException e) {
+                e.printStackTrace();
             }
 
             if (view != null) {
                 setAttribute(context, view, attrs);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         return view;
     }
 
