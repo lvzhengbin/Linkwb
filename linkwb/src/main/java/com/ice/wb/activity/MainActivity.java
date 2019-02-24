@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +18,12 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.ice.wb.R;
-import com.ice.wb.fragment.PlanetFragment;
-import com.ice.wb.fragment.TestRxFragment;
+import com.ice.wb.delegate.MainBottomTabBarDelegate;
+import com.ice.wb.fragment.DynamicTabFragment;
+import com.ice.wb.fragment.HomeTabFragment;
+import com.ice.wb.fragment.LiveTabFragment;
+import com.ice.wb.fragment.MessageTabFragment;
+import com.ice.wb.fragment.MyTabFragment;
 import com.ice.wb.skin.SkinSetting;
 
 
@@ -30,19 +36,26 @@ public class MainActivity extends BaseActivity {
     /** 菜单打开/关闭状态 */
     private boolean isDirection_left = false;
 
-    private Fragment contentFragment;
+    public static final int TAB_HOME = 0;
+    public static final int TAB_LIVE = 1;
+    public static final int TAB_DYNAMIC = 2;
+    public static final int TAB_MESSAGE = 3;
+    public static final int TAB_MY = 4;
+    private final static int HOME_PAGES = 5;
+    private Fragment[] mFragments;
+    private Fragment mCurrentFragment;//当前正显示的fragment
+
+
     private int currentDrawerItem = 0;
 
     //@Bind(R.id.toolbar)
     private Toolbar mToolbar;
+    private MainBottomTabBarDelegate mBottomTabBarDelegate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //ButterKnife.bind(this);
-        setContentView(R.layout.wb_main_activity);
-        mPlanetTitles = getResources().getStringArray(R.array.menu_array);
-        initView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
@@ -53,7 +66,14 @@ public class MainActivity extends BaseActivity {
                 mDrawerLayout.setClipToPadding(false);
             }
         }
+        setContentView(R.layout.wb_main_activity);
+        mPlanetTitles = getResources().getStringArray(R.array.menu_array);
+        initView();
         addListeners();
+        //默认显示首页tab
+        if (mBottomTabBarDelegate != null){
+            mBottomTabBarDelegate.setTabSelected(TAB_HOME);
+        }
     }
 
     private void initView() {
@@ -72,22 +92,55 @@ public class MainActivity extends BaseActivity {
         mActionBarDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
+        mBottomTabBarDelegate = new MainBottomTabBarDelegate(this, findViewById(R.id.ktv_homepage_bottomBar));
         initFragment();
     }
 
     private void initFragment() {
-        if (contentFragment == null){
-            contentFragment = new TestRxFragment();
+        mFragments = new Fragment[HOME_PAGES];
+        for (int i = 0; i < HOME_PAGES; i++) {
+            mFragments[i] = getFragment(i);
+        }
+        loadMultipleRootTransaction(getSupportFragmentManager(), R.id.drawer_content, mFragments, TAB_HOME);
+
+        /*if (mCurrentFragment == null){
+            mCurrentFragment = new TestRxFragment();
         }
         Bundle args = new Bundle();
         args.putString("key", mPlanetTitles[0]);
-        contentFragment.setArguments(args);
+        mCurrentFragment.setArguments(args);
 
         // 通过替换已存在的fragment来插入新的fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.drawer_content, contentFragment)
-                .commit();
+                .add(R.id.drawer_content, mCurrentFragment)
+                .commit();*/
+    }
+
+
+    private Fragment getFragment(int index){
+        Fragment fragment;
+        switch (index){
+            case TAB_HOME:
+                fragment = new HomeTabFragment();
+                break;
+            case TAB_LIVE:
+                fragment = new LiveTabFragment();
+                break;
+            case TAB_DYNAMIC:
+                fragment = new DynamicTabFragment();
+                break;
+            case TAB_MESSAGE:
+                fragment = new MessageTabFragment();
+                break;
+            case TAB_MY:
+                fragment = new MyTabFragment();
+                break;
+            default:
+                fragment = new HomeTabFragment();
+                break;
+        }
+        return fragment;
     }
 
     private void addListeners() {
@@ -95,7 +148,7 @@ public class MainActivity extends BaseActivity {
         mNagigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                int itemId = item.getItemId();
+                /*int itemId = item.getItemId();
                 if (itemId == R.id.nav_menu_setting){
                     selectItem(0);
                 }else if (itemId == R.id.nav_menu_categories){
@@ -104,10 +157,78 @@ public class MainActivity extends BaseActivity {
                     selectItem(2);
                 }else if (itemId == R.id.nav_menu_loginOut){
                     selectItem(3);
-                }
+                }*/
                 return false;
             }
         });
+        mBottomTabBarDelegate.setOnTabChangedListener(new MainBottomTabBarDelegate.OnTabChangedListener() {
+            @Override
+            public void onTabChanged(int curTabPosition, int preTabPosition) {
+                Log.d(TAG, "curTabPosition = " + curTabPosition + ", preTabPosition = " + preTabPosition);
+                onFragmentTabChanged(curTabPosition, preTabPosition);
+            }
+        });
+    }
+
+    private void loadMultipleRootTransaction(FragmentManager fragmentManager, int containerId, Fragment[] tos, int defaultTabIndex) {
+        if (fragmentManager == null || tos.length <= 0) {
+            return;
+        }
+        int index = 0;
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        for (Fragment to : tos) {
+            if (to != null) {
+                String toName = to.getClass().getName();
+                if (to.isAdded()) {
+                    //Fragment重复add会抛异常
+                    ft.attach(to);
+                } else {
+                    ft.add(containerId, to, toName);
+                }
+                if (index == defaultTabIndex){
+                    ft.show(to);
+                }else {
+                    ft.hide(to);
+                }
+                index++;
+            }
+        }
+        ft.commitAllowingStateLoss();
+    }
+
+    private void onFragmentTabChanged(int tabIndex, int preTabIndex) {
+        if (mFragments != null && mFragments.length > tabIndex) {
+            Fragment fragment = mFragments[tabIndex];
+            if (fragment == null || !fragment.isAdded()) {
+                Log.d(TAG, fragment == null ? "fragment is null" : "fragment isAdded() " + fragment.isAdded());
+                return;
+            }
+        }
+
+        if (tabIndex != preTabIndex && mFragments != null && mFragments.length > 0) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if (preTabIndex >= 0 && mFragments.length > preTabIndex) {
+                Fragment preFragment = mFragments[preTabIndex];
+                if (preFragment.isAdded()) {
+                    Log.d(TAG, "hide(preFragment) tabIndex = " + preTabIndex);
+                    ft.hide(preFragment);
+                }
+            }
+            if (tabIndex >= 0) {
+                if (mFragments.length > tabIndex) {
+                    if (mCurrentFragment != null && mCurrentFragment.isAdded()) {
+                        ft.hide(mCurrentFragment);
+                    }
+                    mCurrentFragment = mFragments[tabIndex];
+                    if (mCurrentFragment.isAdded()) {
+                        Log.d(TAG, "show(mCurrentFragment) tabIndex = " + tabIndex);
+                        ft.show(mCurrentFragment);
+                        mCurrentFragment.setUserVisibleHint(true);
+                    }
+                }
+            }
+            ft.commitAllowingStateLoss();
+        }
     }
 
     /**
@@ -143,27 +264,27 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void selectItem(int position) {
+    /*private void selectItem(int position) {
         if (position == currentDrawerItem){
             mDrawerLayout.closeDrawer(mNagigationView);
             return;
         }
         currentDrawerItem = position;
         // 创建一个新的fragment并且根据行星的位置来显示
-        contentFragment = new PlanetFragment();
+        mCurrentFragment = new PlanetFragment();
         Bundle args = new Bundle();
         args.putString("key", mPlanetTitles[position]);
-        contentFragment.setArguments(args);
+        mCurrentFragment.setArguments(args);
 
         // 通过替换已存在的fragment来插入新的fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.drawer_content, contentFragment)
+                .replace(R.id.drawer_content, mCurrentFragment)
                 .commit();
         //高亮被选择的item, 更新标题, 并关闭drawer
         mToolbar.setTitle(mPlanetTitles[position]);
         mDrawerLayout.closeDrawer(mNagigationView);
-    }
+    }*/
 
     /**
      * 点击ActionBar上菜单

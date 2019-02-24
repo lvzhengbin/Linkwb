@@ -8,4 +8,8 @@
 
     <dimen name="toolbar_padding_top">0dp</dimen>
 
+    <dimen name="wb_textsize_10">10sp</dimen>
+    <dimen name="wb_main_tab_border_margin">4dp</dimen>
+    <dimen name="wb_main_tab_mid_margin">7dp</dimen>
+
 </resources>

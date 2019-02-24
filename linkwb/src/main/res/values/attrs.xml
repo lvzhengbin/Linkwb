@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="Wb_TabButton">
+        <attr name="wb_tab_icon" format="reference" />
+        <attr name="wb_tab_index" format="integer"/>
+        <attr name="wb_tab_button_text" format="string" />
+        <attr name="wb_tab_button_text_size" format="dimension" />
+        <attr name="wb_tab_icon_padding" format="dimension" />
+        <attr name="wb_tab_text_normal_color" format="string|reference" />
+        <attr name="wb_tab_text_selected_color" format="string|reference" />
+    </declare-styleable>
+
+</resources>

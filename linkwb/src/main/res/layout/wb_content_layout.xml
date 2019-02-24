@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <include layout="@layout/wb_common_toolbar"
-        android:id="@+id/wb_title_layout"/>
 
     <FrameLayout
         android:id="@+id/drawer_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="58dp"
         android:background="@android:color/white"/>
 
-</LinearLayout>
+    <include
+        layout="@layout/wb_homepage_bottom_bar_layout"
+        android:id="@+id/ktv_homepage_bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"/>
+
+    <include layout="@layout/wb_common_toolbar"
+        android:id="@+id/wb_title_layout"/>
+
+</RelativeLayout>
