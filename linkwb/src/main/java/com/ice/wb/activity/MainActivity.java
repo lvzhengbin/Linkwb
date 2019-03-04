@@ -186,8 +186,10 @@ public class MainActivity extends BaseActivity {
                     ft.add(containerId, to, toName);
                 }
                 if (index == defaultTabIndex){
+                    to.setUserVisibleHint(true);
                     ft.show(to);
                 }else {
+                    to.setUserVisibleHint(false);
                     ft.hide(to);
                 }
                 index++;
@@ -212,13 +214,15 @@ public class MainActivity extends BaseActivity {
                 if (preFragment.isAdded()) {
                     Log.d(TAG, "hide(preFragment) tabIndex = " + preTabIndex);
                     ft.hide(preFragment);
+                    preFragment.setUserVisibleHint(false);
                 }
             }
             if (tabIndex >= 0) {
                 if (mFragments.length > tabIndex) {
-                    if (mCurrentFragment != null && mCurrentFragment.isAdded()) {
+                    /*if (mCurrentFragment != null && mCurrentFragment.isAdded()) {
                         ft.hide(mCurrentFragment);
-                    }
+                        mCurrentFragment.setUserVisibleHint(false);
+                    }*/
                     mCurrentFragment = mFragments[tabIndex];
                     if (mCurrentFragment.isAdded()) {
                         Log.d(TAG, "show(mCurrentFragment) tabIndex = " + tabIndex);

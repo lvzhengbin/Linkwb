@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ice.common.fragment.BaseLazyFragment;
 import com.ice.wb.R;
 
 /**
@@ -14,9 +15,10 @@ import com.ice.wb.R;
  * Created by lvzhengbin
  * Time: 2019/2/23
  */
-public class MyTabFragment extends AbsSkinFragment{
+public class MyTabFragment extends BaseLazyFragment {
 
     private static final String TAG = "MyTabFragment";
+    private TextView mTextview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,7 +29,20 @@ public class MyTabFragment extends AbsSkinFragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated 我的tab fragment");
-        TextView tv = (TextView) view.findViewById(R.id.fragment_tag);
-        tv.setText("我的tab fragment页");
+        mTextview = (TextView) view.findViewById(R.id.fragment_tag);
+        mTextview.setText("我的tab fragment页");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        Log.d(TAG, "setUserVisibleHint() 我的tab isVisibleToUser = " + isVisibleToUser);
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onLazyLoad() {
+        super.onLazyLoad();
+        Log.d(TAG, "onLazyLoad() 我的tab fragment");
+        mTextview.setText("我的tab fragment页 onLazyLoad()");
     }
 }

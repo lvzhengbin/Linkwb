@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ice.common.fragment.BaseLazyFragment;
 import com.ice.wb.R;
 
 /**
@@ -14,9 +15,11 @@ import com.ice.wb.R;
  * Created by lvzhengbin
  * Time: 2019/2/23
  */
-public class MessageTabFragment extends AbsSkinFragment{
+public class MessageTabFragment extends BaseLazyFragment {
 
     private static final String TAG = "MessageTabFragment";
+    private TextView mTextview;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,7 +30,20 @@ public class MessageTabFragment extends AbsSkinFragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated 消息tab fragment");
-        TextView tv = (TextView) view.findViewById(R.id.fragment_tag);
-        tv.setText("消息tab fragment页");
+        mTextview = (TextView) view.findViewById(R.id.fragment_tag);
+        mTextview.setText("消息tab fragment页");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        Log.d(TAG, "setUserVisibleHint() 消息tab isVisibleToUser = " + isVisibleToUser);
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onLazyLoad() {
+        super.onLazyLoad();
+        Log.d(TAG, "onLazyLoad() 消息tab fragment");
+        mTextview.setText("消息tab fragment页 onLazyLoad()");
     }
 }
