@@ -27,4 +27,8 @@
     <color name="theme_skin_color_6">#CD3700</color>
     <color name="theme_skin_color_7">#EEEE00</color>
 
+    <color name="color_fe5353">#fe5353</color>
+    <color name="color_fe5353_10">#1Afe5353</color>
+    <color name="color_fe5353_20">#33fe5353</color>
+
 </resources>

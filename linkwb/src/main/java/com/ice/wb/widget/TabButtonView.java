@@ -9,9 +9,10 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.ViewGroup;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ice.wb.R;
@@ -21,8 +22,9 @@ import com.ice.wb.R;
  * Created by lvzhengbin
  * Time: 2019/2/23
  */
-public class TabButtonView extends LinearLayout {
+public class TabButtonView extends RelativeLayout {
 
+    private CircleWaveView mCircleWaveView;
     private TextView mTextView;
     private ImageView mImage;
 
@@ -39,9 +41,6 @@ public class TabButtonView extends LinearLayout {
     private static int DEFAULT_PADDING = 8;
     private static String DEFAULT_TEXT_NORMAL_COLOR = "#808080";
     private static String DEFAULT_TEXT_SELECTED_COLOR = "#FF3B47";
-
-
-
 
     public TabButtonView(Context context) {
         super(context);
@@ -60,9 +59,14 @@ public class TabButtonView extends LinearLayout {
 
 
     private void init(Context context, AttributeSet attrs) {
+        View inflate = LayoutInflater.from(getContext()).inflate(R.layout.wb_tab_button_layout, this);
+        mTextView = (TextView) inflate.findViewById(R.id.tv_tab_name);
+        mImage = (ImageView) inflate.findViewById(R.id.iv_tab_icon);
+        mCircleWaveView = (CircleWaveView) inflate.findViewById(R.id.circle_wave_view);
+
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Wb_TabButton);
-        setGravity(Gravity.CENTER);
-        setOrientation(LinearLayout.VERTICAL);
+        //setGravity(Gravity.CENTER);
+        //setOrientation(LinearLayout.VERTICAL);
         String textColorStr = null;
         String selectedColorStr = null;
         mBorderMargin = (int) getResources().getDimension(R.dimen.wb_main_tab_border_margin);
@@ -100,23 +104,25 @@ public class TabButtonView extends LinearLayout {
 
     private void initTabImage() {
         if (mDrawable != null){
-            mImage = new ImageView(getContext());
+            /*mImage = new ImageView(getContext());
             mImage.setImageDrawable(mDrawable);
-            addView(mImage);
+            addView(mImage);*/
+
+            mImage.setImageDrawable(mDrawable);
         }
     }
 
     private void initTextView() {
-        mTextView = new TextView(getContext());
+        //mTextView = new TextView(getContext());
         mTextView.setText(mPrimaryText);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
         mTextView.setTextColor(mNormalColor);
         mTextView.setGravity(Gravity.CENTER);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        //MarginLayoutParams params = new MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //adjustLayout(params);
-        params.topMargin = mPadding;
-        mTextView.setLayoutParams(params);
-        addView(mTextView);
+        //params.topMargin = mPadding;
+        //mTextView.setLayoutParams(params);
+        //addView(mTextView);
     }
 
     private void adjustLayout(LayoutParams lp){
@@ -143,6 +149,9 @@ public class TabButtonView extends LinearLayout {
             } else {
                 mTextView.setTextColor(mNormalColor);
             }
+        }
+        if (mCircleWaveView != null && selected){
+            mCircleWaveView.startAnimator();
         }
     }
 }
