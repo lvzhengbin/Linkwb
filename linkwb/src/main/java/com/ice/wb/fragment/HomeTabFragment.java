@@ -61,8 +61,8 @@ public class HomeTabFragment extends BaseLazyFragment {
             @Override
             public void onClick(View v) {
                 mTabLive.setSelect(true);
-                //mCircleWaveView.startAnimator();
-                mCircleLoadingView.startAnimation();
+                mCircleWaveView.startAnimator();
+                //mCircleLoadingView.startAnimation();
             }
         });
 

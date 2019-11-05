@@ -59,6 +59,7 @@ public class TabButtonView extends RelativeLayout {
 
 
     private void init(Context context, AttributeSet attrs) {
+        setClipChildren(false);
         View inflate = LayoutInflater.from(getContext()).inflate(R.layout.wb_tab_button_layout, this);
         mTextView = (TextView) inflate.findViewById(R.id.tv_tab_name);
         mImage = (ImageView) inflate.findViewById(R.id.iv_tab_icon);

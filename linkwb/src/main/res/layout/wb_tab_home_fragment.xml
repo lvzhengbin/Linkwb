@@ -45,19 +45,29 @@
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"/>
 
-    <com.ice.wb.widget.CircleWaveView
-        android:id="@+id/circle_wave_view"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+    <RelativeLayout
+        android:id="@+id/wave_view_layout"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/tab_home"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"/>
+        android:background="@color/theme_skin_color_3"
+        android:clipChildren="false">
+
+        <com.ice.wb.widget.CircleWaveView
+            android:id="@+id/circle_wave_view"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <com.ice.wb.widget.CircleLoadingView
         android:id="@+id/loading_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/circle_wave_view"
+        android:layout_below="@+id/wave_view_layout"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

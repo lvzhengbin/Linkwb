@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
@@ -33,6 +34,7 @@ public class NavTabMineView extends AbsNavTabView {
     private Bitmap mDynamicTabBgBitmap;
 
     private float mRadius;
+    private RectF mRectfill;
 
 
     public NavTabMineView(Context context) {
@@ -51,10 +53,11 @@ public class NavTabMineView extends AbsNavTabView {
     }
 
     private void init(){
+        mRectfill = new RectF();
         mPaint.setColor(mMainColor);
 
         mUnDynamicTabBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.lz_main_nav_tab_mine_un);
-        mDynamicTabBgBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.mine_anim);
+        mDynamicTabBgBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.mine_anim_test);
     }
 
     @Override
@@ -64,8 +67,8 @@ public class NavTabMineView extends AbsNavTabView {
         }*/
         super.setSelect(select);
         if(isSelect) {
-            //startAnimator();
-            startScaleAnimator();
+            startAnimator();
+            //startScaleAnimator();
         }else{
             abortAnimation();
             invalidate();
@@ -106,7 +109,15 @@ public class NavTabMineView extends AbsNavTabView {
             mRadius = getWidth()/2 * (progress1/(float)100);
             mPaint.setShader(new LinearGradient(getWidth(), getHeight(), getWidth(), 0, mMainColor, Color.parseColor("#4CFE5353"), Shader.TileMode.CLAMP));
             mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
-            canvas.drawCircle(cx, cy, mRadius, mPaint);
+            //canvas.drawCircle(cx, cy, mRadius, mPaint);
+
+
+
+            mRectfill.left = (float)getWidth() - (getWidth()/2) * progress1/(float)100;
+            mRectfill.top = (float)getHeight() - (getHeight() * 7/(float)10) * (progress1/(float)100);
+            mRectfill.right = getWidth();
+            mRectfill.bottom = getHeight();
+            canvas.drawArc(mRectfill, 90, 180, true, mPaint);
         }
     }
 

@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.ice.common.utils.SystemUtil;
 import com.ice.wb.R;
 
 /**
@@ -19,7 +20,7 @@ import com.ice.wb.R;
  */
 public class CircleWaveView extends View {
 
-    private static final int ANIMATION_TIME = 150;
+    private static final int ANIMATION_TIME = 550;
     private Paint mPaint;
     private float mRadius;
 
@@ -51,7 +52,7 @@ public class CircleWaveView extends View {
         super.onDraw(canvas);
         int cx = getWidth() / 2;
         int cy = getHeight() / 2;
-        int maxRadius = Math.min(cx, cy);
+        int maxRadius = Math.min(cx, cy) + SystemUtil.dip2px(getContext(), 20);
         if (progress * maxRadius > 0){
             mRadius = progress * maxRadius / 100;
             canvas.drawCircle(cx, cy, mRadius, mPaint);

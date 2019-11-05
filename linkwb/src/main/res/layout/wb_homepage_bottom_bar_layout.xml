@@ -1,100 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ktv_homepage_bottom_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true">
+    android:layout_alignParentBottom="true"
+    android:layout_gravity="bottom"
+    android:adjustViewBounds="true"
+    android:gravity="bottom"
+    android:orientation="horizontal"
+    android:clipChildren="false">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/wb_homepage_bottombar_bg" />
+    <!-- 首页 -->
+    <com.ice.wb.widget.TabButtonView
+        android:id="@+id/tab_btn_homepage"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="-3dp"
+        android:layout_weight="1"
+        app:wb_tab_icon="@drawable/lz_main_nav_tab_home_un"
+        app:wb_tab_button_text="首页"
+        app:wb_tab_button_text_size="@dimen/wb_textsize_10"
+        app:wb_tab_icon_padding="3dp"
+        app:wb_tab_index="0"
+        app:wb_tab_text_normal_color="#808080"
+        app:wb_tab_text_selected_color="#FF3B47"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:adjustViewBounds="true"
-        android:gravity="bottom"
-        android:orientation="horizontal">
+    <!-- 直播 -->
+    <com.ice.wb.widget.TabButtonView
+        android:id="@+id/tab_btn_live"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="-3dp"
+        android:layout_weight="1"
+        app:wb_tab_icon="@drawable/lz_main_nav_tab_live_un"
+        app:wb_tab_button_text="直播"
+        app:wb_tab_button_text_size="@dimen/wb_textsize_10"
+        app:wb_tab_icon_padding="3dp"
+        app:wb_tab_index="1"
+        app:wb_tab_text_normal_color="#808080"
+        app:wb_tab_text_selected_color="#FF3B47"/>
 
-        <!-- 首页 -->
-        <com.ice.wb.widget.TabButtonView
-            android:id="@+id/tab_btn_homepage"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="-3dp"
-            android:layout_weight="1"
-            app:wb_tab_icon="@drawable/lz_main_nav_tab_home_un"
-            app:wb_tab_button_text="首页"
-            app:wb_tab_button_text_size="@dimen/wb_textsize_10"
-            app:wb_tab_icon_padding="3dp"
-            app:wb_tab_index="0"
-            app:wb_tab_text_normal_color="#808080"
-            app:wb_tab_text_selected_color="#FF3B47"/>
+    <!-- 动态 -->
+    <com.ice.wb.widget.TabButtonView
+        android:id="@+id/tab_btn_focus"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="-3dp"
+        android:layout_weight="1"
+        app:wb_tab_icon="@drawable/lz_main_nav_tab_dynamic_un"
+        app:wb_tab_button_text="动态"
+        app:wb_tab_button_text_size="@dimen/wb_textsize_10"
+        app:wb_tab_icon_padding="3dp"
+        app:wb_tab_index="2"
+        app:wb_tab_text_normal_color="#808080"
+        app:wb_tab_text_selected_color="#FF3B47"/>
 
-        <!-- 直播 -->
-        <com.ice.wb.widget.TabButtonView
-            android:id="@+id/tab_btn_live"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="-3dp"
-            android:layout_weight="1"
-            app:wb_tab_icon="@drawable/lz_main_nav_tab_live_un"
-            app:wb_tab_button_text="直播"
-            app:wb_tab_button_text_size="@dimen/wb_textsize_10"
-            app:wb_tab_icon_padding="3dp"
-            app:wb_tab_index="1"
-            app:wb_tab_text_normal_color="#808080"
-            app:wb_tab_text_selected_color="#FF3B47"/>
+    <!-- 消息 -->
+    <com.ice.wb.widget.TabButtonView
+        android:id="@+id/tab_btn_message"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="-3dp"
+        android:layout_weight="1"
+        app:wb_tab_icon="@drawable/wb_icon_main_tab_match_un"
+        app:wb_tab_button_text="消息"
+        app:wb_tab_button_text_size="@dimen/wb_textsize_10"
+        app:wb_tab_icon_padding="3dp"
+        app:wb_tab_index="3"
+        app:wb_tab_text_normal_color="#808080"
+        app:wb_tab_text_selected_color="#FF3B47"/>
 
-        <!-- 动态 -->
-        <com.ice.wb.widget.TabButtonView
-            android:id="@+id/tab_btn_focus"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="-3dp"
-            android:layout_weight="1"
-            app:wb_tab_icon="@drawable/lz_main_nav_tab_dynamic_un"
-            app:wb_tab_button_text="动态"
-            app:wb_tab_button_text_size="@dimen/wb_textsize_10"
-            app:wb_tab_icon_padding="3dp"
-            app:wb_tab_index="2"
-            app:wb_tab_text_normal_color="#808080"
-            app:wb_tab_text_selected_color="#FF3B47"/>
+    <!-- 我的 -->
+    <com.ice.wb.widget.TabButtonView
+        android:id="@+id/tab_btn_my"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="-3dp"
+        android:layout_weight="1"
+        app:wb_tab_icon="@drawable/lz_main_nav_tab_mine_un"
+        app:wb_tab_button_text="我的"
+        app:wb_tab_button_text_size="@dimen/wb_textsize_10"
+        app:wb_tab_icon_padding="3dp"
+        app:wb_tab_index="4"
+        app:wb_tab_text_normal_color="#808080"
+        app:wb_tab_text_selected_color="#FF3B47"/>
 
-        <!-- 消息 -->
-        <com.ice.wb.widget.TabButtonView
-            android:id="@+id/tab_btn_message"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="-3dp"
-            android:layout_weight="1"
-            app:wb_tab_icon="@drawable/wb_icon_main_tab_match_un"
-            app:wb_tab_button_text="消息"
-            app:wb_tab_button_text_size="@dimen/wb_textsize_10"
-            app:wb_tab_icon_padding="3dp"
-            app:wb_tab_index="3"
-            app:wb_tab_text_normal_color="#808080"
-            app:wb_tab_text_selected_color="#FF3B47"/>
-
-        <!-- 我的 -->
-        <com.ice.wb.widget.TabButtonView
-            android:id="@+id/tab_btn_my"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="-3dp"
-            android:layout_weight="1"
-            app:wb_tab_icon="@drawable/lz_main_nav_tab_mine_un"
-            app:wb_tab_button_text="我的"
-            app:wb_tab_button_text_size="@dimen/wb_textsize_10"
-            app:wb_tab_icon_padding="3dp"
-            app:wb_tab_index="4"
-            app:wb_tab_text_normal_color="#808080"
-            app:wb_tab_text_selected_color="#FF3B47"/>
-
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>
