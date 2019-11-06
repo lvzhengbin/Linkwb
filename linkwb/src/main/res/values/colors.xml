@@ -31,4 +31,6 @@
     <color name="color_fe5353_10">#1Afe5353</color>
     <color name="color_fe5353_20">#33fe5353</color>
 
+    <color name="color_transparent">#00000000</color>
+
 </resources>

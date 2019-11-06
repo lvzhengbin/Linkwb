@@ -12,62 +12,13 @@
         android:textColor="@color/theme_text_color"
         android:textSize="22sp" />
 
-
-    <com.ice.wb.widget.NavTabLiveView
-        android:id="@+id/tab_live"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+    <com.ice.wb.widget.LzPasswordInputView
+        android:id="@+id/lz_pwd_input_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/fragment_tag"
         android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"/>
+        />
 
-    <com.ice.wb.widget.NavTabDynamicView
-        android:id="@+id/tab_dynamic"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_below="@+id/tab_live"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"/>
-
-    <com.ice.wb.widget.NavTabMineView
-        android:id="@+id/tab_mine"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_below="@+id/tab_dynamic"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"/>
-
-    <com.ice.wb.widget.NavTabHomeView
-        android:id="@+id/tab_home"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_below="@+id/tab_mine"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"/>
-
-    <RelativeLayout
-        android:id="@+id/wave_view_layout"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_below="@+id/tab_home"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:background="@color/theme_skin_color_3"
-        android:clipChildren="false">
-
-        <com.ice.wb.widget.CircleWaveView
-            android:id="@+id/circle_wave_view"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_centerInParent="true"/>
-
-    </RelativeLayout>
-
-    <com.ice.wb.widget.CircleLoadingView
-        android:id="@+id/loading_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/wave_view_layout"
-        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
