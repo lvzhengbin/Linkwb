@@ -1,7 +1,6 @@
 package com.ice.wb.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,8 @@ import com.ice.wb.model.AppInfo;
 
 import java.util.List;
 
-import butterknife.Bind;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -51,10 +51,10 @@ public class TestLocalAppsAdapter extends RecyclerView.Adapter<TestLocalAppsAdap
     class MyViewHolder extends RecyclerView.ViewHolder
     {
 
-        @Bind(R.id.iv_app_icon)
+        @BindView(R.id.iv_app_icon)
         ImageView appIcon;
 
-        @Bind(R.id.tv_app_name)
+        @BindView(R.id.tv_app_name)
         TextView appName;
         public MyViewHolder(View view)
         {

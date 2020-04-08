@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -25,7 +21,11 @@ import com.ice.wb.model.AppInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Observer;
@@ -43,10 +43,10 @@ public class TestRxFragment extends AbsSkinFragment implements SwipeRefreshLayou
 
     private Context mContext;
 
-    @Bind(R.id.app_list_swipeRefreshLayout)
+    @BindView(R.id.app_list_swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @Bind(R.id.app_list_recyclerView)
+    @BindView(R.id.app_list_recyclerView)
     RecyclerView mRecyclerView;
 
     //private TestLocalAppsAdapter adapter;

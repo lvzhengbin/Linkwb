@@ -2,14 +2,6 @@ package com.ice.wb.activity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.ice.wb.R;
 import com.ice.wb.delegate.MainBottomTabBarDelegate;
 import com.ice.wb.fragment.DynamicTabFragment;
@@ -25,6 +18,16 @@ import com.ice.wb.fragment.LiveTabFragment;
 import com.ice.wb.fragment.MessageTabFragment;
 import com.ice.wb.fragment.MyTabFragment;
 import com.ice.wb.skin.SkinSetting;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+//import androidx.appcompat.app.ActionBarActivity;
 
 
 public class MainActivity extends BaseActivity {
@@ -83,7 +86,7 @@ public class MainActivity extends BaseActivity {
         mNagigationView.inflateMenu(R.menu.menu_nav);
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
-        ActionBarActivity toolbarActivity = (ActionBarActivity) getActivity();
+        AppCompatActivity toolbarActivity = (AppCompatActivity) getActivity();
         toolbarActivity.setSupportActionBar(mToolbar);
         toolbarActivity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         mToolbar.setTitle("首页");

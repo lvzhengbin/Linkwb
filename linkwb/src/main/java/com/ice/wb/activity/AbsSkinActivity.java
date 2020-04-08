@@ -6,18 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 
 import com.ice.wb.skin.SkinEngine;
 import com.ice.wb.skin.SkinListener;
 import com.ice.wb.skin.WeakSkinListener;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+//import androidx.appcompat.app.ActionBarActivity;
+
 
 /**
  * Created by lvzhengbin on 15/10/22.
  */
-public class AbsSkinActivity extends ActionBarActivity implements SkinListener {
+public class AbsSkinActivity extends AppCompatActivity implements SkinListener {
 
     public Context mContext;
     private SkinEngine mSkinEngine;

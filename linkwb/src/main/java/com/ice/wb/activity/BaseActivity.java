@@ -1,18 +1,19 @@
 package com.ice.wb.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by lvzhengbin on 16/4/18.
  */
 public class BaseActivity extends AbsSkinActivity{
 
-    public ActionBarActivity mActivity;
+    public AppCompatActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mActivity = (ActionBarActivity)getActivity();
+        this.mActivity = (AppCompatActivity)getActivity();
     }
 }
