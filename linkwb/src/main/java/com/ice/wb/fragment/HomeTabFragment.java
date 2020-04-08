@@ -1,5 +1,6 @@
 package com.ice.wb.fragment;
 
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 
 import com.ice.common.fragment.BaseLazyFragment;
 import com.ice.wb.R;
-import com.ice.wb.widget.LzPasswordInputView;
+import com.ice.wb.widget.SquareProgressBar;
 
 /**
  * Desc:首页tab fragment
@@ -20,7 +21,7 @@ public class HomeTabFragment extends BaseLazyFragment {
 
     private static final String TAG = "HomeTabFragment";
     private TextView mTextview;
-    private LzPasswordInputView mPwdInputView;
+    private SquareProgressBar mSquareProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,19 +37,21 @@ public class HomeTabFragment extends BaseLazyFragment {
     }
 
     private void initView(View view) {
-        mTextview = (TextView) view.findViewById(R.id.fragment_tag);
+        mTextview = view.findViewById(R.id.fragment_tag);
         mTextview.setText("首页tab fragment页");
-        mPwdInputView = (LzPasswordInputView) view.findViewById(R.id.lz_pwd_input_view);
+        mSquareProgressBar = view.findViewById(R.id.wb_square_progress);
+        mSquareProgressBar.setImage(R.drawable.station_post_default_bg);
 
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
+        valueAnimator.setDuration(4000);
+        valueAnimator.addUpdateListener(valueAnimator1 -> {
+            int animatedValue = (int) valueAnimator1.getAnimatedValue();
+            mSquareProgressBar.setProgress(animatedValue);
+        });
+        valueAnimator.start();
     }
 
     private void addListener() {
-        mPwdInputView.setOnPasswordInputFinishListener(new LzPasswordInputView.OnPasswordInputFinishListener() {
-            @Override
-            public void onInputFinish(String password) {
-                Log.d("LIZHI_LV", "input finish and value is " + password);
-            }
-        });
 
     }
 

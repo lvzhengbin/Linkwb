@@ -12,13 +12,13 @@
         android:textColor="@color/theme_text_color"
         android:textSize="22sp" />
 
-    <com.ice.wb.widget.LzPasswordInputView
-        android:id="@+id/lz_pwd_input_view"
-        android:layout_width="match_parent"
+    <com.ice.wb.widget.SquareProgressBar
+        android:id="@+id/wb_square_progress"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fragment_tag"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
         />
-
 
 </RelativeLayout>
