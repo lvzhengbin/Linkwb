@@ -13,7 +13,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.ice.wb.R;
 import com.ice.wb.delegate.MainBottomTabBarDelegate;
 import com.ice.wb.fragment.DynamicTabFragment;
-import com.ice.wb.fragment.HomeTabFragment;
+import com.ice.wb.fragment.HomeTabFragmentKt;
 import com.ice.wb.fragment.LiveTabFragment;
 import com.ice.wb.fragment.MessageTabFragment;
 import com.ice.wb.fragment.MyTabFragment;
@@ -125,7 +125,7 @@ public class MainActivity extends BaseActivity {
         Fragment fragment;
         switch (index){
             case TAB_HOME:
-                fragment = new HomeTabFragment();
+                fragment = new HomeTabFragmentKt();
                 break;
             case TAB_LIVE:
                 fragment = new LiveTabFragment();
@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity {
                 fragment = new MyTabFragment();
                 break;
             default:
-                fragment = new HomeTabFragment();
+                fragment = new HomeTabFragmentKt();
                 break;
         }
         return fragment;
