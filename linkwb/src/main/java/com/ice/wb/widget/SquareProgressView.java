@@ -35,13 +35,8 @@ public class SquareProgressView extends View {
     private boolean roundedCorners = false;
     private float roundedCornersRadius = 10;
 
-    private PercentStyle percentSettings = new PercentStyle(Align.CENTER, 150,
-            true);
+    private PercentStyle percentSettings = new PercentStyle(Align.CENTER, 150,true);
     private boolean clearOnHundred = false;
-    private boolean isIndeterminate = false;
-    private int indeterminate_count = 1;
-
-    private float indeterminate_width = 20.0f;
 
     public SquareProgressView(Context context) {
         super(context);
@@ -111,79 +106,40 @@ public class SquareProgressView extends View {
             return;
         }
 
-        if (isIndeterminate()) {
-            Path path = new Path();
-            DrawStop drawEnd = getDrawEnd((scope / 100) * Float.valueOf(String.valueOf(indeterminate_count)), canvas);
+        Path path = new Path();
+        DrawStop drawEnd = getDrawEnd((scope / 100) * Float.valueOf(String.valueOf(progress)), canvas);
 
-            if (drawEnd.place == Place.TOP) {
-                path.moveTo(drawEnd.location - indeterminate_width - strokewidth, hSw);
-                path.lineTo(drawEnd.location, hSw);
-                canvas.drawPath(path, progressBarPaint);
-            }
+        if (drawEnd.place == Place.TOP) {
+            path.moveTo(strokewidth, hSw);
+            path.lineTo(drawEnd.location, hSw);
+            canvas.drawPath(path, progressBarPaint);
+        }
 
-            if (drawEnd.place == Place.RIGHT) {
-                path.moveTo(cW - hSw, drawEnd.location - indeterminate_width);
-                path.lineTo(cW - hSw, strokewidth
-                        + drawEnd.location);
-                canvas.drawPath(path, progressBarPaint);
-            }
+        if (drawEnd.place == Place.RIGHT) {
+            path.moveTo(strokewidth, hSw);
+            path.lineTo(cW - hSw, hSw);
+            path.lineTo(cW - hSw, 0
+                    + drawEnd.location);
+            canvas.drawPath(path, progressBarPaint);
+        }
 
-            if (drawEnd.place == Place.BOTTOM) {
-                path.moveTo(drawEnd.location - indeterminate_width - strokewidth,
-                        cH - hSw);
-                path.lineTo(drawEnd.location, cH
-                        - hSw);
-                canvas.drawPath(path, progressBarPaint);
-            }
+        if (drawEnd.place == Place.BOTTOM) {
+            path.moveTo(strokewidth, hSw);
+            path.lineTo(cW - hSw, hSw);
+            path.lineTo(cW - hSw, cH - hSw);
+            path.lineTo(cW - strokewidth, cH - hSw);
+            path.lineTo(drawEnd.location, cH - hSw);
+            canvas.drawPath(path, progressBarPaint);
+        }
 
-            if (drawEnd.place == Place.LEFT) {
-                path.moveTo(hSw, drawEnd.location - indeterminate_width
-                        - strokewidth);
-                path.lineTo(hSw, drawEnd.location);
-                canvas.drawPath(path, progressBarPaint);
-            }
-
-            indeterminate_count++;
-            if (indeterminate_count > 100) {
-                indeterminate_count = 0;
-            }
-            invalidate();
-        } else {
-            Path path = new Path();
-            DrawStop drawEnd = getDrawEnd((scope / 100) * Float.valueOf(String.valueOf(progress)), canvas);
-
-            if (drawEnd.place == Place.TOP) {
-                path.moveTo(strokewidth, hSw);
-                path.lineTo(drawEnd.location, hSw);
-                canvas.drawPath(path, progressBarPaint);
-            }
-
-            if (drawEnd.place == Place.RIGHT) {
-                path.moveTo(strokewidth, hSw);
-                path.lineTo(cW - hSw, hSw);
-                path.lineTo(cW - hSw, 0
-                        + drawEnd.location);
-                canvas.drawPath(path, progressBarPaint);
-            }
-
-            if (drawEnd.place == Place.BOTTOM) {
-                path.moveTo(strokewidth, hSw);
-                path.lineTo(cW - hSw, hSw);
-                path.lineTo(cW - hSw, cH - hSw);
-                path.lineTo(cW - strokewidth, cH - hSw);
-                path.lineTo(drawEnd.location, cH - hSw);
-                canvas.drawPath(path, progressBarPaint);
-            }
-
-            if (drawEnd.place == Place.LEFT) {
-                path.moveTo(strokewidth, hSw);
-                path.lineTo(cW - hSw, hSw);
-                path.lineTo(cW - hSw, cH - hSw);
-                path.lineTo(hSw, cH - hSw);
-                path.lineTo(hSw, cH - strokewidth);
-                path.lineTo(hSw, drawEnd.location);
-                canvas.drawPath(path, progressBarPaint);
-            }
+        if (drawEnd.place == Place.LEFT) {
+            path.moveTo(strokewidth, hSw);
+            path.lineTo(cW - hSw, hSw);
+            path.lineTo(cW - hSw, cH - hSw);
+            path.lineTo(hSw, cH - hSw);
+            path.lineTo(hSw, cH - strokewidth);
+            path.lineTo(hSw, drawEnd.location);
+            canvas.drawPath(path, progressBarPaint);
         }
     }
 
@@ -309,15 +265,6 @@ public class SquareProgressView extends View {
 
     public void setCenterline(boolean centerline) {
         this.centerline = centerline;
-        this.invalidate();
-    }
-
-    public boolean isIndeterminate() {
-        return isIndeterminate;
-    }
-
-    public void setIndeterminate(boolean indeterminate) {
-        isIndeterminate = indeterminate;
         this.invalidate();
     }
 
