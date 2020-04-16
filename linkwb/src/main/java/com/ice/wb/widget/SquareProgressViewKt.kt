@@ -3,15 +3,11 @@ package com.ice.wb.widget
 import android.R
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.CornerPathEffect
-import android.graphics.Paint
+import android.graphics.*
 import android.graphics.Paint.Align
-import android.graphics.Path
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
-import com.ice.wb.widget.utils.PercentStyle
 import java.text.DecimalFormat
 
 /**
@@ -26,7 +22,7 @@ class SquareProgressViewKt : View {
     private var outlinePaint = Paint()
     private var textPaint = Paint()
 
-    private var widthInDp = 5f
+    private var widthInDp = 3f
     private var strokewidth = 0f
     private var mCanvas: Canvas? = null
 
@@ -56,7 +52,7 @@ class SquareProgressViewKt : View {
 
     private fun initializePaints(context: Context) {
         progressBarPaint.apply {
-            color = context.resources.getColor(R.color.holo_green_dark)
+            color =  Color.parseColor("#fe5353")
             strokeWidth = convertDpToPx(widthInDp, getContext()).toFloat()
             isAntiAlias = true
             style = Paint.Style.STROKE
@@ -72,7 +68,7 @@ class SquareProgressViewKt : View {
         textPaint.apply {
             color = context.resources.getColor(R.color.black)
             isAntiAlias = true
-            style = Paint.Style.STROKE
+            style = Paint.Style.FILL
         }
     }
 
@@ -150,19 +146,21 @@ class SquareProgressViewKt : View {
         mCanvas!!.drawPath(outlinePath, outlinePaint)
     }
 
+    /**
+     * 获取当前进度值
+     */
     fun getProgress(): Double {
         return progress
     }
 
+    /**
+     * 更新进度
+     */
     fun setProgress(progress: Double) {
         this.progress = progress
         this.invalidate()
     }
 
-    fun setColor(color: Int){
-        progressBarPaint.color = color
-        this.invalidate()
-    }
 
     fun setWidthInDp(width: Int){
         this.widthInDp = width.toFloat()
@@ -196,24 +194,35 @@ class SquareProgressViewKt : View {
             textPaint.textSize = setting.textSize
         }
         var percentString = DecimalFormat("###").format(getProgress())
-        if (setting.isPercentSign) {
+        if (setting.percentSign) {
             percentString += percentSettings.customText
         }
         textPaint.color = percentSettings.textColor
         mCanvas!!.drawText(
                 percentString,
                 mCanvas!!.width / 2.toFloat(),
-                ((mCanvas!!.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2) as Int).toFloat(),
+                (mCanvas!!.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2),
                 textPaint)
     }
     
     fun isShowProgress() : Boolean{
         return showProgress
     }
-    
+
+    /**
+     * 设置展示进度值
+     */
     fun setShowProgress(showProgress : Boolean){
         this.showProgress = showProgress
         this.invalidate()
+    }
+
+    /**
+     * 设置进度画笔颜色
+     */
+    fun setProgressBarColor(color: Int){
+        progressBarPaint.color = color
+        invalidate()
     }
 
     fun setPercentStyle(percentSettings: PercentStyle) {
@@ -301,13 +310,18 @@ class SquareProgressViewKt : View {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics).toInt()
     }
 
-    private class DrawStop() {
+    private class DrawStop {
         var place: Place? = null
         var location = 0f
     }
 
     enum class Place {
         TOP, RIGHT, BOTTOM, LEFT
+    }
+
+    data class PercentStyle(var align: Align, var textSize: Float, var percentSign: Boolean = false) {
+        var customText = "%"
+        var textColor = Color.BLACK
     }
 
 }

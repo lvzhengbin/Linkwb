@@ -1,6 +1,8 @@
 package com.ice.wb.fragment
 
 import android.animation.ValueAnimator
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ice.common.fragment.BaseLazyFragment
+import com.ice.common.utils.SystemUtil
 import com.ice.wb.R
 import com.ice.wb.widget.SquareProgressBar
 import com.ice.wb.widget.SquareProgressViewKt
@@ -38,16 +41,18 @@ class HomeTabFragmentKt : BaseLazyFragment(){
     private fun initView(view : View) {
         mTextview = view.findViewById(R.id.fragment_tag)
         mTextview.setText("首页tab fragment页")
-        mSquareProgressBar = view.findViewById(R.id.wb_square_progress)
-        mSquareProgressBar.setImage(R.drawable.station_post_default_bg)
 
         mSquareProgressViewKt = view.findViewById(R.id.wb_square_progress_kt)
+        mSquareProgressViewKt.setShowProgress(true)
+        mSquareProgressViewKt.setProgressBarColor(Color.parseColor("#fe5353"))
+        val percentSettings = SquareProgressViewKt.PercentStyle(Paint.Align.CENTER, SystemUtil.dip2px(context, 28f).toFloat(), true)
+        percentSettings.textColor = Color.parseColor("#fe5353")
+        mSquareProgressViewKt.setPercentStyle(percentSettings)
 
         val valueAnimator = ValueAnimator.ofInt(0, 100)
         valueAnimator.setDuration(4000)
         valueAnimator.addUpdateListener { valueAnimator1: ValueAnimator ->
             val animatedValue = valueAnimator1.animatedValue as Int
-            //mSquareProgressBar.setProgress(animatedValue)
             mSquareProgressViewKt.setProgress(animatedValue.toDouble())
         }
         valueAnimator.start()

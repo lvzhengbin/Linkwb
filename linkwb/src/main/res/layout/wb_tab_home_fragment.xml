@@ -12,15 +12,17 @@
         android:textColor="@color/theme_text_color"
         android:textSize="22sp" />
 
-    <com.ice.wb.widget.SquareProgressBar
-        android:id="@+id/wb_square_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="300dp"
+        android:layout_height="350dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/action_settings"
+        android:padding="5dp"
         android:layout_below="@+id/fragment_tag"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        />
+        android:src="@drawable/station_post_default_bg" />
 
     <com.ice.wb.widget.SquareProgressViewKt
         android:id="@+id/wb_square_progress_kt"
