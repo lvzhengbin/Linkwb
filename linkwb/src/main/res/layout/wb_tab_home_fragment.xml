@@ -19,6 +19,16 @@
         android:layout_below="@+id/fragment_tag"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        />
+
+    <com.ice.wb.widget.SquareProgressViewKt
+        android:id="@+id/wb_square_progress_kt"
+        android:layout_width="300dp"
+        android:layout_height="350dp"
+        android:layout_below="@+id/fragment_tag"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
         />
 
 </RelativeLayout>
