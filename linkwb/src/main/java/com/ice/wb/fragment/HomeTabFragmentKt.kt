@@ -1,8 +1,7 @@
 package com.ice.wb.fragment
 
-import android.animation.ValueAnimator
-import android.graphics.Color
-import android.graphics.Paint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,10 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ice.common.fragment.BaseLazyFragment
-import com.ice.common.utils.SystemUtil
 import com.ice.wb.R
-import com.ice.wb.widget.SquareProgressBar
-import com.ice.wb.widget.SquareProgressViewKt
 
 /**
  * Desc:
@@ -24,8 +20,6 @@ class HomeTabFragmentKt : BaseLazyFragment(){
 
     val TAG : String = "HomeTabFragmentKt"
     lateinit var mTextview : TextView
-    lateinit var mSquareProgressBar : SquareProgressBar
-    lateinit var mSquareProgressViewKt: SquareProgressViewKt
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.wb_tab_home_fragment, null)
@@ -42,20 +36,6 @@ class HomeTabFragmentKt : BaseLazyFragment(){
         mTextview = view.findViewById(R.id.fragment_tag)
         mTextview.setText("首页tab fragment页")
 
-        mSquareProgressViewKt = view.findViewById(R.id.wb_square_progress_kt)
-        mSquareProgressViewKt.setShowProgress(true)
-        mSquareProgressViewKt.setProgressBarColor(Color.parseColor("#fe5353"))
-        val percentSettings = SquareProgressViewKt.PercentStyle(Paint.Align.CENTER, SystemUtil.dip2px(context, 28f).toFloat(), true)
-        percentSettings.textColor = Color.parseColor("#fe5353")
-        mSquareProgressViewKt.setPercentStyle(percentSettings)
-
-        val valueAnimator = ValueAnimator.ofInt(0, 100)
-        valueAnimator.setDuration(4000)
-        valueAnimator.addUpdateListener { valueAnimator1: ValueAnimator ->
-            val animatedValue = valueAnimator1.animatedValue as Int
-            mSquareProgressViewKt.setProgress(animatedValue.toDouble())
-        }
-        valueAnimator.start()
     }
 
     private fun addListener(){
