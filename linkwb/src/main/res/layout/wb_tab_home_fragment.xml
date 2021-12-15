@@ -12,22 +12,11 @@
         android:textColor="@color/theme_text_color"
         android:textSize="22sp" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="300dp"
-        android:layout_height="350dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/action_settings"
-        android:padding="5dp"
-        android:layout_below="@+id/fragment_tag"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/station_post_default_bg" />
 
-    <com.ice.wb.widget.SquareProgressViewKt
-        android:id="@+id/wb_square_progress_kt"
-        android:layout_width="300dp"
-        android:layout_height="350dp"
+    <com.ice.wb.widget.MatchWaveView
+        android:id="@+id/wave_view"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         android:layout_below="@+id/fragment_tag"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"

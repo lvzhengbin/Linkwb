@@ -1,7 +1,5 @@
 package com.ice.wb.fragment
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.ice.common.fragment.BaseLazyFragment
 import com.ice.wb.R
+import kotlinx.android.synthetic.main.wb_tab_home_fragment.*
 
 /**
  * Desc:
@@ -34,12 +33,18 @@ class HomeTabFragmentKt : BaseLazyFragment(){
 
     private fun initView(view : View) {
         mTextview = view.findViewById(R.id.fragment_tag)
-        mTextview.setText("首页tab fragment页")
+        mTextview.text = "首页tab fragment页"
 
     }
 
     private fun addListener(){
-
+        mTextview.setOnClickListener {
+            if (wave_view.isAnimating()){
+                wave_view.pauseAnimation()
+            }else{
+                wave_view.playAnimation()
+            }
+        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -50,6 +55,6 @@ class HomeTabFragmentKt : BaseLazyFragment(){
     override fun onLazyLoad() {
         super.onLazyLoad()
         Log.d(TAG, "onLazyLoad() 首页tab fragment")
-        mTextview.setText("首页tab fragment页 onLazyLoad()")
+        mTextview.text = "首页tab fragment页 onLazyLoad()"
     }
 }
